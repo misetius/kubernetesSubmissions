@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todoapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todoapp
+  template:
+    metadata:
+      labels:
+        app: todoapp
+    spec:
+      containers:
+        - name: todoapp
+          image: misetius/webserver
+
+#https://raw.githubusercontent.com/misetius/kubernetesSubmissions/main/the_project/manifests/deployment.yaml
