@@ -14,4 +14,6 @@ spec:
     spec:
       containers:
         - name: logoutput
-          image: misetius/app1:latest
+          image: misetius/app1:1.1
+
+#https://raw.githubusercontent.com/misetius/kubernetesSubmissions/main/log_output/manifests/deployment.yaml
