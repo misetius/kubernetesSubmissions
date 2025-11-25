@@ -17,7 +17,7 @@ spec:
           image: misetius/webserver
           env:
           - name: PORT
-            value: 3001
+            value: "3001"
 
 
 #https://raw.githubusercontent.com/misetius/kubernetesSubmissions/main/the_project/manifests/deployment.yaml
