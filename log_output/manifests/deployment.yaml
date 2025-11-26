@@ -12,11 +12,26 @@ spec:
       labels:
         app: logoutput
     spec:
+      volumes:
+        - name: shared-file
+          emptyDir: {}
       containers:
-        - name: logoutput
-          image: misetius/app1:1.7
+        - name: getlogoutput
+          image: misetius/getlog:1.10
           env:
           - name: PORT
             value: "3005"
+          volumeMounts:
+          - name: shared-file
+            mountPath: /usr/src/app/files 
+        - name: loggenerator
+          image: misetius/generatelog:1.10
+          env:
+          - name: PORT
+            value: "3007"
+          volumeMounts:
+          - name: shared-file
+            mountPath: /usr/src/app/files 
+
 
 #https://raw.githubusercontent.com/misetius/kubernetesSubmissions/main/log_output/manifests/deployment.yaml
