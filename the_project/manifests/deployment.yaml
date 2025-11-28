@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: todoapp
-          image: misetius/webserver
+          image: misetius/frontend:1.12
           env:
           - name: PORT
             value: "3001"

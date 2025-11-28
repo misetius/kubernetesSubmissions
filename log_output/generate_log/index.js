@@ -16,7 +16,7 @@ const filePath = path.join(directory)
 setInterval(() => {
     let date_time = new Date()
     console.log(date_time, string);
-    const logEntry = `${date_time} ${string}\n`
+    const logEntry = `${date_time} ${string};`
     fs.appendFileSync(filePath, logEntry)
 
 
