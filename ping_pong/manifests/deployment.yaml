@@ -12,18 +12,18 @@ spec:
       labels:
         app: pingpong
     spec:
-      volumes:
-        - name: shared-volume
-          persistentVolumeClaim:
-            claimName: volume-claim
+#      volumes:
+#        - name: shared-volume
+#          persistentVolumeClaim:
+#            claimName: volume-claim
       containers:
         - name: pingpong
-          image: misetius/pingpong:1.11
+          image: misetius/pingpong:2.1
           imagePullPolicy: Always
           env:
           - name: PORT
             value: "3006"
-          volumeMounts:
-          - name: shared-volume
-            mountPath: /usr/src/app/pongs
+#          volumeMounts:
+#          - name: shared-volume
+#            mountPath: /usr/src/app/pongs
 

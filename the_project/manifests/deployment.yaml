@@ -12,12 +12,31 @@ spec:
       labels:
         app: todoapp
     spec:
+      volumes:
+        - name: shared-image
+          persistentVolumeClaim:
+            claimName: volume-claim
       containers:
+        - name: fetchapp
+          image: misetius/fetchapp:1.12
+          imagePullPolicy: Always
+          env:
+          - name: PORT
+            value: "3010"
+          volumeMounts:
+          - name: shared-image
+            mountPath: /usr/src/app/images
+         
+
         - name: todoapp
           image: misetius/frontend:1.12
+          imagePullPolicy: Always
           env:
           - name: PORT
             value: "3001"
+          volumeMounts:
+          - name: shared-image
+            mountPath: /usr/src/app/images
             
 
 

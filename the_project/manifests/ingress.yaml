@@ -10,6 +10,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: todoapp-svc
+            name: fetchapp-svc
             port:
-              number: 3456
+              number: 9872
+

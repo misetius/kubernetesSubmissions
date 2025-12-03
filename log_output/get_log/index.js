@@ -1,28 +1,36 @@
 const express = require('express')
 const path = require('path')
 const fs = require('fs')
+const axios = require("axios")
 const app = express()
 app.use(express.json())
 
 const filePath =  path.join('/', 'usr', 'src', 'app', 'files', "log.txt")
-const filePathPong =  path.join('/', 'usr', 'src', 'app', 'pongs', "pongs.txt")
+// const filePathPong =  path.join('/', 'usr', 'src', 'app', 'pongs', "pongs.txt")
 
 
 
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
 
     try {
     let data = fs.readFileSync(filePath, 'utf8')
-    const pongs = fs.readFileSync(filePathPong, 'utf8')
     const realdata = data.split(";")
-    console.log(realdata)
+    let pongs = 1
+    const response = await axios.get("http://pingpong-svc:4567/")
+    pongs = response.data['pings']
+        
+    if (pongs === -1){
+        pongs = 0
+    }
+  
 
    // const listItems = realdata.map(line => `<p>${line}</p>`).join('')
 
+
  // Not sure if I am meant to show only one logoutput or all of them   
     res.send(`<p>${realdata[realdata.length - 2]}</p> 
-        <p> ${pongs} </p>`)
+        <p> Ping / Pongs: ${pongs} </p>`)
     }
     catch (err) {
         console.error('Error reading a file:', err)

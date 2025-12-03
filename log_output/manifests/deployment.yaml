@@ -15,12 +15,12 @@ spec:
       volumes:
         - name: shared-file
           emptyDir: {}
-        - name: shared-pong
-          persistentVolumeClaim:
-            claimName: volume-claim
+#        - name: shared-pong
+#          persistentVolumeClaim:
+#            claimName: volume-claim
       containers:
         - name: getlogoutput
-          image: misetius/getlog:1.11
+          image: misetius/getlog:2.1
           imagePullPolicy: Always
           env:
           - name: PORT
@@ -28,10 +28,10 @@ spec:
           volumeMounts:
           - name: shared-file
             mountPath: /usr/src/app/files 
-          - name: shared-pong
-            mountPath: /usr/src/app/pongs
+#          - name: shared-pong
+#            mountPath: /usr/src/app/pongs
         - name: loggenerator
-          image: misetius/generatelog:1.11
+          image: misetius/generatelog:2.1
           imagePullPolicy: Always
           env:
           - name: PORT
