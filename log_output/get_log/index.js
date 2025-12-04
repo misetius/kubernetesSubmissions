@@ -7,7 +7,7 @@ app.use(express.json())
 
 const filePath =  path.join('/', 'usr', 'src', 'app', 'files', "log.txt")
 // const filePathPong =  path.join('/', 'usr', 'src', 'app', 'pongs', "pongs.txt")
-
+const filePathInformation =  path.join('/', 'usr', 'src', 'app', 'information', "information.txt")
 
 
 
@@ -23,13 +23,15 @@ app.get('/', async (req, res) => {
     if (pongs === -1){
         pongs = 0
     }
-  
-
+    const information = fs.readFileSync(filePathInformation)
+    const message = process.env.MESSAGE
    // const listItems = realdata.map(line => `<p>${line}</p>`).join('')
 
 
  // Not sure if I am meant to show only one logoutput or all of them   
-    res.send(`<p>${realdata[realdata.length - 2]}</p> 
+    res.send(`<p>file content: ${information}</p>
+        <p>env variable: ${message}</p>
+        <p>${realdata[realdata.length - 2 ]}</p> 
         <p> Ping / Pongs: ${pongs} </p>`)
     }
     catch (err) {

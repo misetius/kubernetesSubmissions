@@ -38,7 +38,7 @@ app.get('/imageurl', (req, res) => {
         console.log(buffer)
     let string = buffer.toString('base64')
     string = string.replace((/\s/g, ''))
-    const data = "data:image/jpg;base64,"+string
+    const data = "data:image/jpg;base64, "+string
     console.log(data)
     res.render("index.ejs",  {data: data})
 })

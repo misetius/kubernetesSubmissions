@@ -18,18 +18,29 @@ spec:
 #        - name: shared-pong
 #          persistentVolumeClaim:
 #            claimName: volume-claim
+        - name: information
+          configMap:
+            name: example-configmap
       containers:
         - name: getlogoutput
-          image: misetius/getlog:2.1
+          image: misetius/getlog:2.5
           imagePullPolicy: Always
           env:
           - name: PORT
             value: "3005"
+          - name: MESSAGE
+            valueFrom:
+              configMapKeyRef:
+                name: example-configmap
+                key: MESSAGE
+
           volumeMounts:
           - name: shared-file
             mountPath: /usr/src/app/files 
 #          - name: shared-pong
 #            mountPath: /usr/src/app/pongs
+          - name: information
+            mountPath: /usr/src/app/information
         - name: loggenerator
           image: misetius/generatelog:2.1
           imagePullPolicy: Always
