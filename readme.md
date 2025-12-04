@@ -13,3 +13,4 @@
 - 1.10 https://github.com/misetius/kubernetesSubmissions/tree/1.10/log_output
 - 1.11 https://github.com/misetius/kubernetesSubmissions/tree/1.11
 - 2.1 https://github.com/misetius/kubernetesSubmissions/tree/2.1/log_output https://github.com/misetius/kubernetesSubmissions/tree/2.1/ping_pong
+- 2.5 https://github.com/misetius/kubernetesSubmissions/tree/2.5/log_output
