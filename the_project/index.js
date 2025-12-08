@@ -16,8 +16,18 @@ const filePath = path.join(directory, "image.jpg")
 
 
 const firstTime = async () => {
+    let string = ""
+
+    fs.readFile(filePath, (err, buffer) => {
+    if (err) return console.log("you are a failure", err)
+    console.log(buffer)
+    string = buffer.toString('base64')
+
+})
+
+if (string.length < 1) {
     
-        await removeFile()
+    await removeFile()
     
 
     await new Promise(res => fs.mkdir(directory, (err) => res()))
@@ -25,20 +35,25 @@ const firstTime = async () => {
     response.data.pipe(fs.createWriteStream(filePath))
      console.log("test")
     pictureTodelete = true
+}
 
+else {
+
+    
+}
 
 
    
     
 }
 
-app.get('/imageurl', (req, res) => {
+app.get('/', (req, res) => {
     fs.readFile(filePath, (err, buffer) => {
     if (err) return console.log("you are a failure", err)
         console.log(buffer)
     let string = buffer.toString('base64')
     string = string.replace((/\s/g, ''))
-    const data = "data:image/jpg;base64, "+string
+    const data = "data:image/jpeg;base64, "+string.slice(9)
     console.log(data)
     res.render("index.ejs",  {data: data})
 })
