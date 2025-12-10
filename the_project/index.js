@@ -14,7 +14,7 @@ app.use(cors())
 const directory = path.join('/', 'usr', 'src', 'app', 'images')
 const filePath = path.join(directory, "image.jpg")
 
-
+//not needed really
 const firstTime = async () => {
     let string = ""
 
@@ -22,7 +22,7 @@ const firstTime = async () => {
     if (err) return console.log("you are a failure", err)
     console.log(buffer)
     string = buffer.toString('base64')
-
+  
 })
 
 if (string.length < 1) {
@@ -39,7 +39,7 @@ if (string.length < 1) {
 
 else {
 
-    
+
 }
 
 
@@ -47,20 +47,32 @@ else {
     
 }
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+
+    let data = ""
+
     fs.readFile(filePath, (err, buffer) => {
     if (err) return console.log("you are a failure", err)
         console.log(buffer)
     let string = buffer.toString('base64')
     string = string.replace((/\s/g, ''))
-    const data = "data:image/jpeg;base64, "+string.slice(9)
+    data = "data:image/jpeg;base64, "+string.slice(9)
     console.log(data)
-    res.render("index.ejs",  {data: data})
+
+
 })
+
+    let response = await axios.get('http://backend-svc:7892/todos')
+    
+    const todos = response.data
+   
+
+    res.render("index.ejs",  {data: data, todos: todos})
+
 })
 
 // testing
-app.get('/test', (req, res) => {
+app.get('/test', (req, res) => { 
 res.sendFile(path.join(__dirname,'index.html'))
 })
 
@@ -83,7 +95,7 @@ setInterval(async () => {
 
 
 const PORT = process.env.PORT || 3010
-firstTime()
+
 app.listen(PORT, () => {
     console.log(`Server started in port ${PORT}`)
 })

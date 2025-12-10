@@ -14,3 +14,12 @@ spec:
             port:
               number: 9872
 
+      - path: /todos
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-svc
+            port:
+              number: 7892
+
+

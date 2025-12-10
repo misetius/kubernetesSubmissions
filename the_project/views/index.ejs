@@ -13,12 +13,45 @@
         <img src="<%= data %>"">
  <% } %>
     
-<form action="">
-  
-  <input type="text" id="todo" name="todo" value="todo" maxlength="140"><br>
+<form id="oma">
+  <input type="text" id="todo" name="todo"  maxlength="140"><br>
   <input type="submit" value="Submit">
 </form>
 
+            <ul>
+                <% todos.forEach(item=> { %>
+                    <li>
+                        <%= item %>
+                    </li>
+                    <% }); %>
+            </ul>
+
+
+
 <p>Devops width Kubernetes 2025</p>
+
+<script>
+
+    const form = document.querySelector('#oma');
+
+    form.addEventListener('submit', event => {
+        
+
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        fetch('http://localhost:8081/todos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+    })
+
+
+
+</script>
 </body>
 </html>
