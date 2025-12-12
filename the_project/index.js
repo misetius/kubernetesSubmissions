@@ -7,7 +7,8 @@ const fs = require('fs')
 const app = express()
 app.use(express.json())
 let pictureTodelete = false
-
+const backendservice = process.env.BACKEND_SERVICE
+const backendurl = process.env.BACKEND_URL
 
 app.use(cors())
 
@@ -62,12 +63,12 @@ app.get('/', async (req, res) => {
 
 })
 
-    let response = await axios.get('http://backend-svc:7892/todos')
+    let response = await axios.get(backendservice)
     
     const todos = response.data
    
 
-    res.render("index.ejs",  {data: data, todos: todos})
+    res.render("index.ejs",  {data: data, todos: todos,  backendurl: backendurl})
 
 })
 

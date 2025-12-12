@@ -19,11 +19,15 @@ spec:
             claimName: volume-claim
       containers:
         - name: fetchapp
-          image: misetius/fetchapp:2.2
+          image: misetius/fetchapp:2.6
           imagePullPolicy: Always
           env:
           - name: PORT
             value: "3010"
+          - name: BACKEND_SERVICE
+            value: "http://backend-svc:7892/todos"
+          - name: BACKEND_URL
+            value: "http://localhost:8081/todos"
           volumeMounts:
           - name: shared-image
             mountPath: /usr/src/app/images

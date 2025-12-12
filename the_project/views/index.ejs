@@ -31,6 +31,8 @@
 <p>Devops width Kubernetes 2025</p>
 
 <script>
+    
+    var url = '<%= backendurl %>';
 
     const form = document.querySelector('#oma');
 
@@ -40,7 +42,7 @@
 
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
-        fetch('http://localhost:8081/todos', {
+        fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
