@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: project
+  name: postgres-configmap
+data:
+  HOST: "postgres2"
+  USER: "postgres2"
+  PASSWORD: "postgres2"
+  DATABASE: "postgres"
+
+  

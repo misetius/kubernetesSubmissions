@@ -17,6 +17,9 @@ spec:
         - name: shared-image
           persistentVolumeClaim:
             claimName: volume-claim
+        - name: postgres-information
+          configMap:
+            name: postgres-configmap
       containers:
         - name: fetchapp
           image: misetius/fetchapp:2.6
@@ -32,11 +35,31 @@ spec:
           - name: shared-image
             mountPath: /usr/src/app/images
         - name: backend
-          image: misetius/backend:2.2
+          image: misetius/backend:2.7
           imagePullPolicy: Always
           env:
           - name: PORT
-            value: "3011"        
+            value: "3011"   
+          - name: HOST
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-configmap
+                key: HOST
+          - name: PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-configmap
+                key: PASSWORD
+          - name: USER
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-configmap
+                key: USER
+          - name: DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-configmap
+                key: DATABASE     
   
 
 

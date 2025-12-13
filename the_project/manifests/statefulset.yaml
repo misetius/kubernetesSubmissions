@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres2
+  namespace: project
+spec:
+  selector:
+    matchLabels:
+      app: postgres2
+  serviceName: postgres2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres2
+    spec:
+     
+      containers:
+        - name: postgres2
+          image: postgres
+          env:
+            - name: POSTGRES_USER
+              value: postgres2
+            - name: POSTGRES_PASSWORD
+              value: postgres2
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+          ports:
+          - name: postgres
+            containerPort: 5432
+          volumeMounts:
+          - name: data2
+            mountPath: /var/lib/postgresql
+  volumeClaimTemplates:
+  - metadata:
+      name: data2
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres2
+  namespace: project
+  labels:
+    app: postgres2
+spec:
+  ports:
+    - name: postgres2
+      port: 5432
+  clusterIP: None
+  selector:
+    app: postgres2

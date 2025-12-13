@@ -2,6 +2,7 @@ const axios = require('axios')
 const express = require('express')
 const cors = require('cors')
 const fs = require('fs')
+const {Client} = require('pg')
 const app = express()
 app.use(express.json())
 
@@ -10,27 +11,51 @@ app.use(express.json())
 app.use(cors())
 
 
-
-let todos = ["tes1","test2", "test3"]
-
+let count = 5
 
 
 
 
+app.get('/todos', async (req, res) => {
+    console.log(process.env.HOST)
+    const client = new Client({
+    host: process.env.HOST,
+    user: process.env.USER,
+    port: 5432,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE
+})
+
+   await client.connect()
+   const result = await client.query('SELECT todo FROM todos')
+
+   const todos = result.rows.map(row => row.todo)
 
 
-app.get('/todos', (req, res) => {
+
     res.json(todos)
 })
 
 
-app.post('/todos', (req, res) => {
+app.post('/todos', async (req, res) => {
 
 let todo = req.body
 console.log(todo)
+count++
+console.log(process.env.HOST)
 
-   todos = todos.concat(todo.todo)
-    res.json(todos)
+
+    const client = new Client({
+    host: process.env.HOST,
+    user: process.env.USER,
+    port: 5432,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE
+})
+
+   await client.connect()
+   const result = await client.query(`INSERT INTO todos (id, todo) VALUES (${count}, '${todo.todo}')`)
+    res.json(result)
 })
 
 
