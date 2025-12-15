@@ -35,7 +35,7 @@ spec:
           - name: shared-image
             mountPath: /usr/src/app/images
         - name: backend
-          image: misetius/backend:2.7
+          image: misetius/backend:2.10
           imagePullPolicy: Always
           env:
           - name: PORT

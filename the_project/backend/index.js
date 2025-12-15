@@ -3,11 +3,12 @@ const express = require('express')
 const cors = require('cors')
 const fs = require('fs')
 const {Client} = require('pg')
+const morgan = require('morgan')
 const app = express()
 app.use(express.json())
 
 
-
+app.use(morgan('tiny'))
 app.use(cors())
 
 
@@ -39,7 +40,14 @@ app.get('/todos', async (req, res) => {
 
 app.post('/todos', async (req, res) => {
 
-let todo = req.body
+const todo = req.body
+
+if  (todo.todo.length > 140) {
+    res.status(400).send("maximum length of todo is 140")
+}
+
+else {
+
 console.log(todo)
 count++
 console.log(process.env.HOST)
@@ -56,6 +64,8 @@ console.log(process.env.HOST)
    await client.connect()
    const result = await client.query(`INSERT INTO todos (id, todo) VALUES (${count}, '${todo.todo}')`)
     res.json(result)
+
+    }
 })
 
 
