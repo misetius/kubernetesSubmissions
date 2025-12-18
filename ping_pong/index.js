@@ -11,12 +11,9 @@ app.use(cors())
 let pongs =-1
 
 
-app.get('/', (req, res) => {
-    res.json({"pings" : pongs})
-})
 
 
-app.get('/pingpong',  async (req, res) => {
+app.get('/',  async (req, res) => {
    // const directory = path.join('/', 'usr', 'src', 'app', 'pongs', "pongs.txt")
     //const filePath = path.join(directory)
     const client = new Client({

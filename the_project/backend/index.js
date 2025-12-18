@@ -32,7 +32,7 @@ app.get('/todos', async (req, res) => {
 
    const todos = result.rows.map(row => row.todo)
 
-
+    await client.end()
 
     res.json(todos)
 })
@@ -63,7 +63,8 @@ console.log(process.env.HOST)
 
    await client.connect()
    const result = await client.query(`INSERT INTO todos (id, todo) VALUES (${count}, '${todo.todo}')`)
-    res.json(result)
+   await client.end() 
+   res.json(result)
 
     }
 })

@@ -15,7 +15,7 @@ app.use(cors())
 const directory = path.join('/', 'usr', 'src', 'app', 'images')
 const filePath = path.join(directory, "image.jpg")
 
-//not needed really
+
 const firstTime = async () => {
     let string = ""
 
@@ -26,6 +26,8 @@ const firstTime = async () => {
   
 })
 
+console.log(string, "the stgri")
+console.log(string.length, "length of string") 
 if (string.length < 1) {
     
     await removeFile()
@@ -38,10 +40,7 @@ if (string.length < 1) {
     pictureTodelete = true
 }
 
-else {
 
-
-}
 
 
    
@@ -52,16 +51,33 @@ app.get('/', async (req, res) => {
 
     let data = ""
 
-    fs.readFile(filePath, (err, buffer) => {
+    fs.readFile(filePath, async (err, buffer) => {
     if (err) return console.log("you are a failure", err)
         console.log(buffer)
     let string = buffer.toString('base64')
     string = string.replace((/\s/g, ''))
     data = "data:image/jpeg;base64, "+string.slice(9)
-    console.log(data)
+   console.log(data.length)
+
+   if (data.length < 100){
+    console.log("firsttime")
+     await firstTime()
+    fs.readFile(filePath, (err, buffer) => {
+    if (err) return console.log("you are a failure", err)
+        console.log(buffer)
+    let string = buffer.toString('base64')
+    string = string.replace((/\s/g, ''))
+    data = "data:image/jpeg;base64, "+string.slice(9)  
+
+})
+   }
 
 
 })
+
+
+    
+    
 
     let response = await axios.get(backendservice)
     
@@ -96,6 +112,7 @@ setInterval(async () => {
 
 
 const PORT = process.env.PORT || 3010
+
 
 app.listen(PORT, () => {
     console.log(`Server started in port ${PORT}`)
