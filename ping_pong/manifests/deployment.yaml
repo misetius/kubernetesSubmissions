@@ -21,11 +21,17 @@ spec:
 #            claimName: volume-claim
       containers:
         - name: pingpong
-          image: misetius/pingpong:3.4
+          image: misetius/pingpong:2.7
           imagePullPolicy: Always
           env:
           - name: PORT
             value: "3006"
+          readinessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 120
+            httpGet:
+              path: /pingpong
+              port: 3006
 #          volumeMounts:
 #          - name: shared-volume
 #            mountPath: /usr/src/app/pongs
