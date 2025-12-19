@@ -30,7 +30,7 @@ spec:
           - name: BACKEND_SERVICE
             value: "http://backend-svc:7892/todos"
           - name: BACKEND_URL
-            value: "http://34.88.19.24:7892/todos"
+            value: "http://localhost:8081/todos"
           volumeMounts:
           - name: shared-image
             mountPath: /usr/src/app/images
@@ -59,7 +59,14 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: postgres-configmap
-                key: DATABASE     
+                key: DATABASE   
+          readinessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 120
+            httpGet:
+              path: /todos
+              port: 3011
+           
   
 
 
