@@ -32,7 +32,8 @@ app.get('/', async (req, res) => {
     res.send(`<p>file content: ${information}</p>
         <p>env variable: ${message}</p>
         <p>${realdata[realdata.length - 2 ]}</p> 
-        <p> Ping / Pongs: ${pongs} </p>`)
+        <p> Ping / Pongs: ${pongs} </p>
+        <p>Testi</p>`)
     }
     catch (err) {
         console.error('Error reading a file:', err)
