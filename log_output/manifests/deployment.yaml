@@ -24,7 +24,7 @@ spec:
             name: example-configmap
       containers:
         - name: getlogoutput
-          image: misetius/getlog:2.5
+          image: PROJECT/IMAGE
           imagePullPolicy: Always
           env:
           - name: PORT
@@ -49,7 +49,7 @@ spec:
           - name: information
             mountPath: /usr/src/app/information
         - name: loggenerator
-          image: misetius/generatelog:2.1
+          image: PROJECT2/IMAGE2
           imagePullPolicy: Always
           env:
           - name: PORT

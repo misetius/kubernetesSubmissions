@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - manifests/configmap.yaml
+  - manifests/deployment.yaml
+  - manifests/service.yaml
+
+
+images:
+- name: PROJECT/IMAGE
+- newName: misetius/getlog:2.5
+- name: PROJECT2/IMAGE2
+- newName: misetius/generatelog:2.1
