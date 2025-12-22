@@ -9,7 +9,7 @@ resources:
 images:
 - name: project/image
   newName: misetius/getlog
-  newTag: b71ae4f0ce0038e6cab9e752a86ae49ba3f99ddf
+  newTag: ba5a48de4c278eb5116c49551df89fde804ffbe7
 - name: project2/image2
   newName: misetius/generatelog
-  newTag: b71ae4f0ce0038e6cab9e752a86ae49ba3f99ddf
+  newTag: ba5a48de4c278eb5116c49551df89fde804ffbe7
