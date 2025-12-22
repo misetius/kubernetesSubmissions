@@ -36,9 +36,9 @@ jobs:
         uses: imranismail/setup-kustomize@v2
 
       - name: Use right image
-        run: kustomize edit set image project/image=misetius/getlog:$GITHUB_SHA
+        run: kustomize edit set image project/image=misetius/getlog:$GITHUB_SHA log_output
       - name: Use right image
-        run: kustomize edit set image project2/image2=misetius/generatelog:$GITHUB_SHA
+        run: kustomize edit set image project2/image2=misetius/generatelog:$GITHUB_SHA log_output
 
       - name: commit kustomization.yaml to GitHub
         uses: EndBug/add-and-commit@v9
