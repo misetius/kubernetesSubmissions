@@ -7,7 +7,7 @@ resources:
 
 
 images:
-- name: PROJECT/IMAGE
+- name: project/image
 - newName: misetius/getlog:2.5
-- name: PROJECT2/IMAGE2
+- name: project2/image2
 - newName: misetius/generatelog:2.1
