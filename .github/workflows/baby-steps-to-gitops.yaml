@@ -23,21 +23,21 @@ jobs:
       # tag image with the GitHub SHA to get a unique tag
       - name: Build and publish get log
         run: |-
-          docker build --tag "misetius/getlog:$GITHUB_SHA" get_log
+          docker build --tag "misetius/getlog:$GITHUB_SHA" /get_log
           docker push "misetius/getlog:$GITHUB_SHA"
 
       - name: Build and publish get log
         run: |-
-          docker build --tag "misetius/generatelog:$GITHUB_SHA" generate_log
+          docker build --tag "misetius/generatelog:$GITHUB_SHA" /generate_log
           docker push "misetius/generatelog:$GITHUB_SHA"
 
       - name: Set up Kustomize
         uses: imranismail/setup-kustomize@v2
 
       - name: Use right image
-        run: kustomize edit set image PROJECT/IMAGE=misetius/getlog:$GITHUB_SHA
+        run: kustomize edit set image project/image=misetius/getlog:$GITHUB_SHA
       - name: Use right image
-        run: kustomize edit set image PROJECT2/IMAGE2=misetius/generatelog:$GITHUB_SHA
+        run: kustomize edit set image project2/image2=misetius/generatelog:$GITHUB_SHA
 
       - name: commit kustomization.yaml to GitHub
         uses: EndBug/add-and-commit@v9
