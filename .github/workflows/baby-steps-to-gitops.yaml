@@ -14,7 +14,8 @@ jobs:
         with: 
             path: './log_output'
         
-  
+      - name: check directory
+        run: ls ./log_output
 
 
       - name: Login to Docker Hub
@@ -26,12 +27,12 @@ jobs:
       # tag image with the GitHub SHA to get a unique tag
       - name: Build and publish get log
         run: |-
-          docker build --tag "misetius/getlog:$GITHUB_SHA" log_output/get_log
+          docker build --tag "misetius/getlog:$GITHUB_SHA" ./log_output/get_log
           docker push "misetius/getlog:$GITHUB_SHA"
 
       - name: Build and publish get log
         run: |-
-          docker build --tag "misetius/generatelog:$GITHUB_SHA" log_output/generate_log
+          docker build --tag "misetius/generatelog:$GITHUB_SHA" ./log_output/generate_log
           docker push "misetius/generatelog:$GITHUB_SHA"
 
       - name: Set up Kustomize
