@@ -41,3 +41,6 @@
 - 4.3 sum(kube_pod_info{namespace="prometheus", created_by_kind="StatefulSet"})
 - 4.7 https://github.com/misetius/kubernetesSubmissions/tree/4.7/log_output
 - 4.8 https://github.com/misetius/kubernetesSubmissions/tree/4.8/the_project
+
+## Chapter 6
+- 5.4 https://github.com/misetius/kubernetesSubmissions/tree/5.4/nginx-app

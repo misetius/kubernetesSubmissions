@@ -30,7 +30,7 @@ spec:
           - name: BACKEND_SERVICE
             value: "http://backend-svc:7892/todos"
           - name: BACKEND_URL
-            value: "http://localhost:8081/todos"
+            value: "/todos"
           volumeMounts:
           - name: shared-image
             mountPath: /usr/src/app/images

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      volumes:
+        - name: www
+          emptyDir: {}      
+      initContainers:
+      - name: get-html-first
+        image: misetius/getkubernetes:5.4
+        imagePullPolicy: Always
+        command: ["curl", "-o" , "/www/index.html",  "https://en.wikipedia.org/wiki/Kubernetes"]
+        volumeMounts:
+        - name: www
+          mountPath: /www
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+        volumeMounts:
+        - name: www
+          mountPath: usr/share/nginx/html
+      - name: getrandomarticle
+        image:  misetius/getrandomarticle:5.4
+        imagePullPolicy: Always
+        command: ["./test.sh"]
+        volumeMounts:
+        - name: www
+          mountPath: /www
+
+      
