@@ -14,7 +14,7 @@ resources:
 images:
 - name: project/image
   newName: misetius/fetchapp
-  newTag: ec8762718d7194a9f11210da0b299f274a70ea72
+  newTag: e43bb23375871399ae1ea27c4ddd62feae7245b8
 - name: project2/image2
   newName: misetius/backend
-  newTag: ec8762718d7194a9f11210da0b299f274a70ea72
+  newTag: e43bb23375871399ae1ea27c4ddd62feae7245b8
