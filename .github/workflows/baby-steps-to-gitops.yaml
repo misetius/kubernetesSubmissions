@@ -1,7 +1,7 @@
 name: Build and publish exercises application
 
 on:
-  
+  #push
 
 jobs:
   build-publish:
