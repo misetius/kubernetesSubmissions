@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: pingpong
   namespace: exercises
@@ -8,10 +8,17 @@ spec:
   selector:
     matchLabels:
       app: pingpong
+  strategy:
+    canary:
+      steps:
+      - setWeight: 30
+      - pause:
+          duration: 30s
+      - analysis:
+          templates:
+          - templateName: track-cpu-usage
   template:
-    metadata:
-      name: pingpong
-      
+    metadata:   
       labels:
         app: pingpong
     spec:
@@ -21,13 +28,13 @@ spec:
 #            claimName: volume-claim
       containers:
         - name: pingpong
-          image: misetius/pingpong:2.7
+          image: misetius/pingpong:2.8
           imagePullPolicy: Always
           env:
           - name: PORT
             value: "3006"
           readinessProbe:
-            initialDelaySeconds: 30
+            initialDelaySeconds: 120
             periodSeconds: 120
             httpGet:
               path: /pingpong

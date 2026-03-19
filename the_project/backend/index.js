@@ -28,9 +28,13 @@ app.get('/todos', async (req, res) => {
 })
 
    await client.connect()
-   const result = await client.query('SELECT todo FROM todos')
+   const result = await client.query('SELECT * FROM todos')
 
-   const todos = result.rows.map(row => row.todo)
+   const todos = result.rows.map(row => ({
+    todo: row.todo,
+    id: row.id,
+    done: row.done
+}));
 
     await client.end()
 
@@ -62,13 +66,54 @@ console.log(process.env.HOST)
 })
 
    await client.connect()
-   const result = await client.query(`INSERT INTO todos (id, todo) VALUES (${count}, '${todo.todo}')`)
-   await client.end() 
+   const result = await client.query(`INSERT INTO todos (todo, done) VALUES ('${todo.todo}', FALSE)`)
+   await client.end()
+   console.log(result) 
    res.json(result)
 
     }
 })
 
+app.put("/todos/:id", async (req, res) => {
+
+    const id = req.params.id
+    const client = new Client({
+    host: process.env.HOST,
+    user: process.env.USER,
+    port: 5432,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE
+})
+
+   await client.connect()
+   const result = await client.query(`UPDATE todos SET done = TRUE  WHERE id = ${id}`)
+   await client.end() 
+   res.json(result)
+
+
+
+})
+
+async function database() {
+    const client = new Client({
+    host: process.env.HOST,
+    user: process.env.USER,
+    port: 5432,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE
+})
+    await client.connect();
+
+    try {
+    const res = await client.query(`SELECT * FROM todos`);
+    }
+    catch{
+    console.log(`table not found`);
+    await client.query(`CREATE TABLE todos(id SERIAL PRIMARY KEY, todo varchar, done boolean);`);
+    await client.end()
+    }
+    
+}
 
 
 
@@ -79,7 +124,7 @@ console.log(process.env.HOST)
 
 
 const PORT = process.env.PORT || 3011
-
+database()
 app.listen(PORT, () => {
     console.log(`Server started in port ${PORT}`)
 })

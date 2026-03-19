@@ -22,7 +22,7 @@ spec:
             name: postgres-configmap
       containers:
         - name: fetchapp
-          image: project/image
+          image: misetius/fetchapp:4.5 #project/image
           imagePullPolicy: Always
           env:
           - name: PORT
@@ -35,7 +35,7 @@ spec:
           - name: shared-image
             mountPath: /usr/src/app/images
         - name: backend
-          image: project2/image2
+          image: misetius/backend:4.5 #project2/image2
           imagePullPolicy: Always
           env:
           - name: PORT
@@ -72,4 +72,3 @@ spec:
 
 
 
-#https://raw.githubusercontent.com/misetius/kubernetesSubmissions/main/the_project/manifests/deployment.yaml

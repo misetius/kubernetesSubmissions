@@ -82,9 +82,17 @@ app.get('/', async (req, res) => {
     let response = await axios.get(backendservice)
     
     const todos = response.data
-   
 
-    res.render("index.ejs",  {data: data, todos: todos,  backendurl: backendurl})
+    console.log("todos:", todos)
+   
+    const notdoneTodos = todos.filter((todo) => todo.done === false)
+
+    console.log("not done todos: ", notdoneTodos)
+    
+
+    const doneTodos = todos.filter((todo) => todo.done === true)
+
+    res.render("index.ejs",  {data: data, todos: notdoneTodos,  backendurl: backendurl, donetodos: doneTodos})
 
 })
 

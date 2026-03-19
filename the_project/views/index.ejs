@@ -18,14 +18,24 @@
   <input type="submit" value="Submit">
 </form>
 
+<h2>Not done</h2>
             <ul>
                 <% todos.forEach(item=> { %>
                     <li>
-                    <h3 id='<%= item %>'>   <%= item %> </h3> 
+                    <h3 id='<%= item %>'>   <%= item.todo %> </h3> 
+                    <button onclick="done(<%= item.id %>)">Mark as done</button>
                     </li>
                     <% }); %>
             </ul>
 
+<h2>Done</h2>
+            <ul>
+                <% donetodos.forEach(item=> { %>
+                    <li>
+                    <h3 id='<%= item %>'>   <%= item.todo %> </h3> 
+                    </li>
+                    <% }); %>
+            </ul>
 
 
 <p>Devops width Kubernetes 2025 (test for argo)</p>
@@ -37,9 +47,6 @@
     const form = document.querySelector('#oma');
 
     form.addEventListener('submit', event => {
-        
-
-
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
         fetch(url, {
@@ -49,8 +56,22 @@
             },
             body: JSON.stringify(data)
         });
-
     })
+
+    async function done(id) {
+        const url2 = url + "/" + id
+        try {
+            const response = await fetch(url2, {
+                method: 'PUT'
+            });
+        } catch (err){
+            console.log(err);
+        }
+        location.reload()
+    }
+
+
+
 
 
 </script>
