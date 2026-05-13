@@ -22,7 +22,7 @@ spec:
             name: postgres-configmap
       containers:
         - name: fetchapp
-          image: misetius/fetchapp:4.5 #project/image
+          image: misetius/fetchapp:4.6 #project/image
           imagePullPolicy: Always
           env:
           - name: PORT
@@ -35,7 +35,7 @@ spec:
           - name: shared-image
             mountPath: /usr/src/app/images
         - name: backend
-          image: misetius/backend:4.5 #project2/image2
+          image: misetius/backend:4.6 #project2/image2
           imagePullPolicy: Always
           env:
           - name: PORT
@@ -60,6 +60,8 @@ spec:
               configMapKeyRef:
                 name: postgres-configmap
                 key: DATABASE   
+          - name: NATS_URL
+            value: nats://my-nats-0:4222
           readinessProbe:
             initialDelaySeconds: 30
             periodSeconds: 120

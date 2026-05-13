@@ -44,4 +44,16 @@
 - 4.8 https://github.com/misetius/kubernetesSubmissions/tree/4.8/the_project
 
 ## Chapter 6
+- 5.2 https://github.com/misetius/kubernetesSubmissions/tree/5.2/
+
+For this exercise I captured images as proof of following the steps in the exercise
+
+<img src="images/firstpart.png">
+
+<img src="images/secondpart.png">
+
+<img src="images/thirdpart.png">
+
+<img src="images/fourthpart.png">
+
 - 5.4 https://github.com/misetius/kubernetesSubmissions/tree/5.4/nginx-app
