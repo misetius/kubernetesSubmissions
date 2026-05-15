@@ -56,4 +56,6 @@ For this exercise I captured images as proof of following the steps in the exerc
 
 <img src="images/fourthpart.png">
 
+- 5.3 https://github.com/misetius/kubernetesSubmissions/tree/5.3/log_output https://github.com/misetius/kubernetesSubmissions/tree/5.3/ping_pong
+
 - 5.4 https://github.com/misetius/kubernetesSubmissions/tree/5.4/nginx-app

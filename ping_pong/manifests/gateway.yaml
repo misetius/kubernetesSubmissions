@@ -1,23 +1,31 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
 metadata:
-  name: ingress-for-logoutput
-  namespace: exercises
+  name: ing-gateway
 spec:
+  gatewayClassName: istio
+  listeners:
+  - name: http
+    port: 80
+    protocol: HTTP
+    allowedRoutes:
+      namespaces:
+        from: Same
+---
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: route-for-logoutput
+spec:
+  parentRefs:
+  - name: ing-gateway
   rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: logoutput-svc
-            port:
-              number: 2345
-      - path: /pingpong
-        pathType: Prefix
-        backend:
-          service:
-            name: pingpong-svc
-            port:
-              number: 4567
+  - matches:
+    - path:
+        type: Exact
+        value: /
+    backendRefs:
+    - name: logoutput-svc
+      port: 2345
+  

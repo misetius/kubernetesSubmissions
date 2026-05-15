@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: exercises
+  #namespace: exercises
   name: example-configmap
 data:
   MESSAGE: "hello world"

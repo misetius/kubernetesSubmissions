@@ -19,7 +19,11 @@ app.get('/', async (req, res) => {
     let pongs = 1
     const response = await axios.get("http://pingpong-svc:4567/")
     pongs = response.data['pings']
+
+    const response2 = await axios.get("http://httpbin-gateway-istio:8888/")
+    
         
+
     if (pongs === -1){
         pongs = 0
     }
@@ -33,6 +37,7 @@ app.get('/', async (req, res) => {
         <p>env variable: ${message}</p>
         <p>${realdata[realdata.length - 2 ]}</p> 
         <p> Ping / Pongs: ${pongs} </p>
+        <p>Greetings: ${response2.data} </p>
         <p>Testi</p>`)
     }
     catch (err) {
@@ -47,4 +52,4 @@ app.listen(PORT, () => {
     console.log(`Server started in port ${PORT}`)
 })
 
-// misetius/getlog:1.11
+
