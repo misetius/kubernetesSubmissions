@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: logoutput
-  #namespace: exercises
+  namespace: exercises
 spec:
   replicas: 1
   selector:
@@ -24,7 +24,7 @@ spec:
             name: example-configmap
       containers:
         - name: getlogoutput
-          image: misetius/getlog:5.3 #project/image
+          image: misetius/getlog:2.5
           imagePullPolicy: Always
           env:
           - name: PORT
@@ -34,12 +34,6 @@ spec:
               configMapKeyRef:
                 name: example-configmap
                 key: MESSAGE
-          readinessProbe:
-            initialDelaySeconds: 30
-            periodSeconds: 120
-            httpGet:
-              path: /
-              port: 3005
 
           volumeMounts:
           - name: shared-file
@@ -49,7 +43,7 @@ spec:
           - name: information
             mountPath: /usr/src/app/information
         - name: loggenerator
-          image: misetius/generatelog:69ec18c9f3f98c7fdc2010c39a975bf7f901e125 #project2/image2
+          image: misetius/generatelog:2.1
           imagePullPolicy: Always
           env:
           - name: PORT
