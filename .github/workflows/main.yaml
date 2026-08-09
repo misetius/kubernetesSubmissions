@@ -77,12 +77,12 @@ jobs:
       - name: Deploy
         working-directory: ./the_project/manifests
         run: |
-          kustomize edit set image the_project\
-            PROJECT/FETCHAPP=$FETCHAPP_IMAGE_TAG \
-            PROJECT/BACKEND=$BACKEND_IMAGE_TAG
+            cd the_project/
+            kustomize edit set image the_project PROJECT/FETCHAPP=$FETCHAPP_IMAGE_TAG
+            kustomize edit set image the_project PROJECT/BACKEND=$BACKEND_IMAGE_TAG
 
-          kustomize build . | kubectl apply -f -
+            kustomize build . | kubectl apply -f -
 
-          kubectl rollout status deployment/$SERVICE
+            kubectl rollout status deployment/$SERVICE
 
-          kubectl get services -o wide
+            kubectl get services -o wide
