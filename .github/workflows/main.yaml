@@ -77,7 +77,7 @@ jobs:
       - name: Deploy
         working-directory: ./the_project/manifests
         run: |
-          kustomize edit set image \
+          kustomize edit set image the_project\
             PROJECT/FETCHAPP=$FETCHAPP_IMAGE_TAG \
             PROJECT/BACKEND=$BACKEND_IMAGE_TAG
 
