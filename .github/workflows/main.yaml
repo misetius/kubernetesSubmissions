@@ -1,0 +1,88 @@
+name: Build, Publish and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: dwk-cluster
+  GKE_ZONE: europe-north1-b
+  REGISTRY: europe-north1-docker.pkg.dev
+  REPOSITORY: my-repository
+
+  FETCHAPP_IMAGE: fetchapp
+  BACKEND_IMAGE: cloud
+
+  SERVICE: todoapp
+  BRANCH: ${{ github.ref_name }}
+
+jobs:
+  build-publish-deploy:
+    name: Build, Publish and Deploy
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker
+        run: gcloud --quiet auth configure-docker $REGISTRY
+
+      - name: Get GKE credentials
+        uses: google-github-actions/get-gke-credentials@v3
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Form image names
+        run: |
+          echo "FETCHAPP_IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$FETCHAPP_IMAGE:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+          echo "BACKEND_IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$BACKEND_IMAGE:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+
+      - name: Build fetchapp
+        run: |
+          docker build \
+            --tag $FETCHAPP_IMAGE_TAG \
+            ./the_project
+
+      - name: Build backend
+        run: |
+          docker build \
+            --tag $BACKEND_IMAGE_TAG \
+            ./the_project/backend
+
+      - name: Publish fetchapp
+        run: docker push $FETCHAPP_IMAGE_TAG
+
+      - name: Publish backend
+        run: docker push $BACKEND_IMAGE_TAG
+
+      - name: Deploy
+        working-directory: ./the_project/manifests
+        run: |
+          kustomize edit set image \
+            PROJECT/FETCHAPP=$FETCHAPP_IMAGE_TAG \
+            PROJECT/BACKEND=$BACKEND_IMAGE_TAG
+
+          kustomize build . | kubectl apply -f -
+
+          kubectl rollout status deployment/$SERVICE
+
+          kubectl get services -o wide

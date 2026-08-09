@@ -9,3 +9,13 @@ resources:
   - manifests/service2.yaml
   - manifests/backendService.yaml
   - manifests/CronJob.yaml
+
+
+images:
+  - name: PROJECT/FETCHAPP
+    newName: PROJECT/FETCHAPP
+    newTag: latest
+
+  - name: PROJECT/BACKEND
+    newName: PROJECT/BACKEND
+    newTag: latest
