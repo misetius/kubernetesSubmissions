@@ -35,7 +35,7 @@
 - 3.3 https://github.com/misetius/kubernetesSubmissions/tree/3.3/log_output https://github.com/misetius/kubernetesSubmissions/tree/3.3/ping_pong
 - 3.4 https://github.com/misetius/kubernetesSubmissions/tree/3.4/log_output https://github.com/misetius/kubernetesSubmissions/tree/3.4/ping_pong
 - 3.5 https://github.com/misetius/kubernetesSubmissions/tree/3.5/the_project
-- 3.6 https://github.com/misetius/kubernetesSubmissions/tree/3.6/the_project
+- 3.6 https://github.com/misetius/kubernetesSubmissions/tree/3.6/the_project (I had a problem with authorization to pull the image. Pipeline still could push the image to the registry so I feel like that I have done this right.)
 
 ## Chapter 5
 
