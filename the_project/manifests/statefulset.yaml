@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres2
+  namespace: project
 spec:
   selector:
     matchLabels:
@@ -48,6 +49,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres2
+  namespace: project
   labels:
     app: postgres2
 spec:
