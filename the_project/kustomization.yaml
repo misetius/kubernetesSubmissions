@@ -1,6 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - manifests/persistentvolumeclaim.yaml
   - manifests/configmap.yaml
   - manifests/statefulset.yaml
   - manifests/deployment.yaml
@@ -13,9 +14,9 @@ resources:
 
 images:
   - name: PROJECT/FETCHAPP
-    newName: PROJECT/FETCHAPP
-    newTag: latest
+    newName: misetius/fetchapp
+    newTag: "4.6"
 
   - name: PROJECT/BACKEND
-    newName: PROJECT/BACKEND
-    newTag: latest
+    newName: misetius/cloud
+    newTag: "3.6"
