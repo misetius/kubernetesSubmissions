@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: project
   name: todoapp
 spec:
   replicas: 1
@@ -16,13 +15,13 @@ spec:
       volumes:
         - name: shared-image
           persistentVolumeClaim:
-            claimName: volume-claim
+            claimName: mypvc
         - name: postgres-information
           configMap:
             name: postgres-configmap
       containers:
         - name: fetchapp
-          image: misetius/fetchapp:4.6 #project/image
+          image: misetius/fetchapp:4.5
           imagePullPolicy: Always
           env:
           - name: PORT
@@ -35,7 +34,7 @@ spec:
           - name: shared-image
             mountPath: /usr/src/app/images
         - name: backend
-          image: misetius/backend:4.6 #project2/image2
+          image: misetius/cloud:3.6
           imagePullPolicy: Always
           env:
           - name: PORT
@@ -59,18 +58,10 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: postgres-configmap
-                key: DATABASE   
-          - name: NATS_URL
-            value: nats://my-nats-0:4222
-          readinessProbe:
-            initialDelaySeconds: 30
-            periodSeconds: 120
-            httpGet:
-              path: /todos
-              port: 3011
-           
+                key: DATABASE     
   
 
 
 
 
+#https://raw.githubusercontent.com/misetius/kubernetesSubmissions/main/the_project/manifests/deployment.yaml

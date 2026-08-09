@@ -4,16 +4,7 @@ const cors = require('cors')
 const fs = require('fs')
 const {Client} = require('pg')
 const morgan = require('morgan')
-const NATS = require('nats')
-
-console.log(process.env.NATS_URL)
-
-const nc = NATS.connect({
-  url: process.env.NATS_URL || 'nats://nats:4222'
-})
 const app = express()
-
-
 app.use(express.json())
 
 
@@ -24,11 +15,15 @@ app.use(cors())
 let count = 5
 
 
-
+app.get('/', (req, res) => {
+    console.log(req)
+    res.send("Hello from backend")
+})
 
 
 app.get('/todos', async (req, res) => {
-    console.log(process.env.HOST)
+    console.log(req)
+
     const client = new Client({
     host: process.env.HOST,
     user: process.env.USER,
@@ -79,15 +74,8 @@ console.log(process.env.HOST)
    const result = await client.query(`INSERT INTO todos (todo, done) VALUES ('${todo.todo}', FALSE)`)
    await client.end()
    console.log(result) 
-
-    const payload = {
-        data: todo
-    }
-
-    nc.publish('todo_data', JSON.stringify(payload))
-
    res.json(result)
- 
+
     }
 })
 
@@ -105,14 +93,6 @@ app.put("/todos/:id", async (req, res) => {
    await client.connect()
    const result = await client.query(`UPDATE todos SET done = TRUE  WHERE id = ${id}`)
    await client.end() 
-
-    const payload = {
-        id: id,
-        data: "todo done"
-    }
-
-    nc.publish('todo_data', JSON.stringify(payload))
-
    res.json(result)
 
 
@@ -127,6 +107,7 @@ async function database() {
     password: process.env.PASSWORD,
     database: process.env.DATABASE
 })
+    console.log("Connecting to database...")
     await client.connect();
 
     try {
@@ -149,6 +130,8 @@ async function database() {
 
 
 const PORT = process.env.PORT || 3011
+
+console.log("database connection")
 database()
 app.listen(PORT, () => {
     console.log(`Server started in port ${PORT}`)

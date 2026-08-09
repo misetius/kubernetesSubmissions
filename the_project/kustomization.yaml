@@ -1,20 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- manifests/configmap.yaml
-- manifests/ingress.yaml
-- manifests/service.yaml
-- manifests/service2.yaml
-- manifests/backendService.yaml
-- manifests/statefulset.yaml
-- manifests/deployment.yaml
-- manifests/CronJob.yaml
-
-
-images:
-- name: project/image
-  newName: misetius/fetchapp
-  newTag: e43bb23375871399ae1ea27c4ddd62feae7245b8
-- name: project2/image2
-  newName: misetius/backend
-  newTag: e43bb23375871399ae1ea27c4ddd62feae7245b8
+  - manifests/configmap.yaml
+  - manifests/statefulset.yaml
+  - manifests/deployment.yaml
+  - manifests/ingress.yaml
+  - manifests/service.yaml
+  - manifests/service2.yaml
+  - manifests/backendService.yaml
+  - manifests/CronJob.yaml
